@@ -20,6 +20,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rubocop'
 gem 'slim-rails'
 gem 'bootstrap-sass'
+gem 'simple_form'
 
 
 group :development do
@@ -32,6 +33,7 @@ end
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'spring-commands-rspec'
   gem 'faker'
