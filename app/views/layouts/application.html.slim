@@ -1,0 +1,19 @@
+doctype html
+html lang="en"
+  head
+    title Url Shortener
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    .container-fluid
+      - if flash[:notice]
+        .alert.alert-success = flash[:notice]
+      - if flash[:error]
+        .alert.alert-danger
+          - flash[:error].full_messages.each do |message|
+            = message
+            br
+      .container
+        = yield

@@ -1,4 +1,6 @@
 = simple_form_for @url do |f|
-  = f.input :original_url, label: 'original_url'
+  = f.error_notification
+  = f.input :original_url, placeholder: 'Enter url here', label: false
 
-  = f.submit 'Shorten'
+  .text-center
+    = f.button :submit, 'Shorten'

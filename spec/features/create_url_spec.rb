@@ -15,6 +15,6 @@ feature 'create url' do
 
     url_form.leave_url(original_url: 'http://blablabla.com/hello').submit
 
-    expect(page).to have_content('Your link has been shortened')
+    expect(page).to have_content('Url was successfully shortened!')
   end
 end

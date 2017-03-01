@@ -20,26 +20,40 @@ describe UrlsController do
   end
 
   describe 'POST create' do
-    context 'with valid attributes' do
+    context 'with valid data' do
+      let(:url_params) { FactoryGirl.attributes_for(:url) }
+
+      it 'redirects to created url path' do
+        post :create, params: { url: url_params }
+        expect(response).to redirect_to(url_path(Url.last.unique_hash))
+      end
+
       it 'creates a new url' do
         expect{
-          post :create, params: { url: FactoryGirl.attributes_for(:url) }
+          post :create, params: { url: url_params }
         }.to change(Url, :count).by(1)
       end
 
-      it 'redirects to the new url' do
-
+      it 'assigns flash message' do
+        post :create, params: { url: url_params }
+        expect(flash[:notice]).to eq('Url was successfully shortened!')
       end
     end
 
-    context 'with invalid attributes' do
+    context 'with invalid data' do
+      let(:invalid_params) { FactoryGirl.attributes_for(:url, original_url: nil) }
+
+      it 're-renders new template' do
+        post :create, params: { url: invalid_params }
+        expect(response).to render_template(:new)
+      end
+
       it 'does not save the new url' do
-
+        expect{
+          post :create, params: { url: invalid_params }
+        }.to change(Url, :count).by(0)
       end
 
-      it 're-renders the new method' do
-
-      end
     end
   end
 end
