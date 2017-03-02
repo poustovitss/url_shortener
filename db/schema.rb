@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228133854) do
+ActiveRecord::Schema.define(version: 20170302120422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170228133854) do
     t.string   "unique_hash"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["unique_hash"], name: "index_urls_on_unique_hash", unique: true, using: :btree
   end
 
 end
