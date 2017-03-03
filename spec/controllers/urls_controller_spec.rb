@@ -56,4 +56,19 @@ describe UrlsController do
 
     end
   end
+
+  describe 'GET shortened url' do
+    let(:url) { FactoryGirl.create(:url) }
+
+    it 'renders template' do
+      get :shortened, params: { unique_hash: url.unique_hash }
+
+      expect(response).to redirect_to(url.original_url)
+    end
+
+    it 'assigns the requested url to @url' do
+      get :shortened, params: { unique_hash: url.unique_hash }
+      expect(assigns(:url)).to eq(url)
+    end
+  end
 end

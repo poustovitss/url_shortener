@@ -1,5 +1,5 @@
 class UrlsController < ApplicationController
-  before_action :set_url, only: :show
+  before_action :set_url, only: [ :show, :shortened ]
 
   def new
     @url = Url.new
@@ -8,14 +8,22 @@ class UrlsController < ApplicationController
   def create
     @url = Url.new(url_params)
 
-    if @url.save
+    if UniqueHashGeneratorService.new(@url).generator
       redirect_to url_path(@url.unique_hash), notice: 'Url was successfully shortened!'
     else
-      render :new
+      render :new, notice: @url.errors
     end
   end
 
   def show
+  end
+
+  def shortened
+    if @url
+      redirect_to @url.original_url
+    else
+      render file: "#{Rails.root}/public/404", layout: false, status: :not_found
+    end
   end
 
   private

@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get '/new', to: 'urls#new'
   get '/url/:unique_hash', to: 'urls#show', as: 'url'
   post '/urls', to: 'urls#create'
+  get ':unique_hash', to: 'urls#shortened'
 end
