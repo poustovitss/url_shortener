@@ -29,7 +29,7 @@ describe UrlsController do
       end
 
       it 'creates a new url' do
-        expect{
+        expect {
           post :create, params: { url: url_params }
         }.to change(Url, :count).by(1)
       end
@@ -49,7 +49,7 @@ describe UrlsController do
       end
 
       it 'does not save the new url' do
-        expect{
+        expect {
           post :create, params: { url: invalid_params }
         }.to change(Url, :count).by(0)
       end
