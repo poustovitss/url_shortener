@@ -60,15 +60,28 @@ describe UrlsController do
   describe 'GET shortened url' do
     let(:url) { FactoryGirl.create(:url) }
 
-    it 'renders template' do
-      get :shortened, params: { unique_hash: url.unique_hash }
+    context 'url exist' do
+      it 'renders template' do
+        get :shortened, params: { unique_hash: url.unique_hash }
+        expect(response).to redirect_to(url.original_url)
+      end
 
-      expect(response).to redirect_to(url.original_url)
+      it 'assigns the requested url to @url' do
+        get :shortened, params: { unique_hash: url.unique_hash }
+        expect(assigns(:url)).to eq(url)
+      end
     end
 
-    it 'assigns the requested url to @url' do
-      get :shortened, params: { unique_hash: url.unique_hash }
-      expect(assigns(:url)).to eq(url)
+    context 'url does not exist' do
+      it 'with response status 404' do
+        get :shortened, params: { unique_hash: 'nil' }
+        expect(response.status).to eq(404)
+      end
+
+      it 'renders 404 page' do
+        get :shortened, params: { unique_hash: 'nil' }
+        expect(response).to render_template(file: "#{Rails.root}/public/404.html")
+      end
     end
   end
 end

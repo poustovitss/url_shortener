@@ -19,11 +19,7 @@ class UrlsController < ApplicationController
   def show; end
 
   def shortened
-    if @url
-      redirect_to @url.original_url
-    else
-      render file: "#{Rails.root}/public/404", layout: false, status: :not_found
-    end
+    (redirect_to @url.original_url if @url) or render_404
   end
 
   private
@@ -33,6 +29,6 @@ class UrlsController < ApplicationController
   end
 
   def set_url
-    @url = Url.where(unique_hash: params[:unique_hash]).first
+    @url = Url.find_by_unique_hash(params[:unique_hash])
   end
 end
